@@ -1,0 +1,11 @@
+{
+    "config":{
+        "secure-http":false
+    },
+    "require": {
+        "johnpbloch/wordpress": "4.9.*"
+    },
+    "extra": {
+        "wordpress-install-dir": "wp"
+    }
+}
