@@ -1,6 +1,6 @@
 <?php
 
-function add_files_admin() {
+function add_files() {
 	wp_enqueue_script('jquery');
 	wp_enqueue_script( 'jquery-ui-datepicker', array( 'jquery' ) );
 	// CSS
@@ -10,7 +10,8 @@ function add_files_admin() {
 	wp_enqueue_script('datatables-js', get_theme_file_uri() . '/assets/js/datatables.min.js', null, microtime(), true);
 	wp_enqueue_script('jquery-modal-js', 'https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.js');
 }
-add_action('admin_enqueue_scripts', 'add_files_admin');
+add_action('admin_enqueue_scripts', 'add_files');
+add_action('wp_enqueue_scripts','add_files');
 
 
 function config_ajaxurl() {
