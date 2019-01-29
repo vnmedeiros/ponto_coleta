@@ -12,6 +12,7 @@ class PontoColeta {
 		add_action('add_meta_boxes', array(&$this, 'add_custom_box'));
 		add_action('save_post', array(&$this, 'save_custom_box'));
 		add_action('wp_ajax_update_item', array(&$this, 'update_item_ajax'));
+		add_action('wp_ajax_get_pontos_by_uf', array(&$this, 'get_pontos_by_UF'));
 		add_action('wp_ajax_nopriv_get_pontos_by_uf', array(&$this, 'get_pontos_by_UF'));
 	}
 
@@ -159,7 +160,7 @@ class PontoColeta {
 
 	function get_pontos_by_UF() {
 		if (empty($_GET)) {
-			wp_send_json_error();
+			wp_send_json_error('asdf');
 			return false;
 		}
 		$UF = strtoupper($_GET['uf']);
@@ -177,7 +178,7 @@ class PontoColeta {
 			$title = get_the_title();
 			$itens = $this->get_itens(get_the_ID());
 			$pontos[] = [	'titulo' => $title, 
-										'ebdereco' => $this->get_endereco(get_the_ID()),
+										'endereco' => $this->get_endereco(get_the_ID()),
 										'itens' => $itens ];
 		}
 		wp_reset_query();
