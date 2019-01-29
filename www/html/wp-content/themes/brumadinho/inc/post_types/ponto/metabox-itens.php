@@ -35,10 +35,10 @@
 			</select>
 			</p><p>
 			<label style="width: 60px;display: inline-block;">entrada:</label>
-			<input name="entrada" type="number" value="0"/>
+			<input name="entrada" type="number" value="0" min="0"/>
 			</p><p>
 			<label style="width: 60px;display: inline-block;">saida:</label>
-			<input name="saida" type="number" value="0"/>
+			<input name="saida" type="number" value="0" min="0"/>
 			</p><p>
 			<input type="submit" value="Adicionar" />
 			</p>

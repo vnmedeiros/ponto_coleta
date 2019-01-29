@@ -142,6 +142,10 @@ class PontoColeta {
 			wp_send_json_error("data not found");
 			return $post_id;
 		}
+		if ($post_entrada < 0 || $post_saida < 0) {
+			wp_send_json_error("invalid data");
+			return $post_id;
+		}
 		if (!current_user_can('edit_post', $post_id)) {
 			wp_send_json_error("user can't edit");
 		 	return $post_id;
