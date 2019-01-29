@@ -201,11 +201,11 @@ class PontoColeta {
 	}
 
 	private function get_endereco($post_id) {
-		$endereco = [	'uf' 			=> get_post_meta($post->ID, "ponto-uf", true),
-									'cidade'	=> get_post_meta($post->ID, "ponto-cidade", true),
-									'endereco'=> get_post_meta($post->ID, "ponto-endereco", true),
-									'telefone'=> get_post_meta($post->ID, "ponto-telefone", true),
-									'email'		=> get_post_meta($post->ID, "ponto-email", true)];
+		$endereco = [	'uf' 			=> get_post_meta($post_id, "ponto-uf", true),
+									'cidade'	=> get_post_meta($post_id, "ponto-cidade", true),
+									'endereco'=> get_post_meta($post_id, "ponto-endereco", true),
+									'telefone'=> get_post_meta($post_id, "ponto-telefone", true),
+									'email'		=> get_post_meta($post_id, "ponto-email", true)];
 		return $endereco;
 	}
 
