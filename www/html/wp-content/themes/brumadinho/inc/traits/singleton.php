@@ -1,5 +1,5 @@
 <?php
-namespace funarte;
+namespace pontoColeta;
 
 trait Singleton {
 

@@ -2,15 +2,8 @@
     "config":{
         "secure-http":false
     },
-    "repositories": [
-        {
-        "type": "composer",
-        "url": "http://wpackagist.org"
-        }
-    ],
     "require": {
-        "johnpbloch/wordpress": "4.9.*",
-        "wpackagist-plugin/tainacan":"*"
+        "johnpbloch/wordpress": "4.9.*"
     },
     "extra": {
         "wordpress-install-dir": "wp"

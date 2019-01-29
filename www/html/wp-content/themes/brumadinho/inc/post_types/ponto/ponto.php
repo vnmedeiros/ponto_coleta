@@ -1,5 +1,5 @@
 <?php
-namespace funarte;
+namespace pontoColeta;
 
 class PontoColeta {
 	use Singleton;
@@ -10,6 +10,7 @@ class PontoColeta {
 		add_action('init', array( &$this, "register_post_type" ));
 		add_action('add_meta_boxes', array(&$this, 'add_custom_box'));
 		// add_action('save_post', array(&$this, 'save_custom_box'));
+		add_action('wp_ajax_update_item', array(&$this, 'update_item_ajax'));
 	}
 
 	public function register_post_type() {
@@ -71,13 +72,13 @@ class PontoColeta {
 		$prefix = 'itens';
 		$itens = get_post_meta($post->ID, "{$prefix}-saldo", true);
 		if ($post->ID && empty($espaco)) {
-			$espaco = [array(
-				'item_slug' 					=> "",
-				'item_descricao' 			=> "",
-				'quantidade entrada' 	=> 0,
-				'quantidade saida' 		=> 0,
-				'saldo' 							=> 0
-			)];
+			$espaco = [
+				// "item_slug" => [
+				// 	'item_descricao' 			=> "",
+				// 	'quantidade entrada' 	=> 0,
+				// 	'quantidade saida' 		=> 0,
+				// 	'saldo' 							=> 0]
+			];
 		}
 
 		$THEME_FOLDER = get_template_directory();
@@ -85,6 +86,13 @@ class PontoColeta {
 		$META_FOLDER = $THEME_FOLDER . $DS . 'inc' . $DS . 'post_types' . $DS . 'ponto' . $DS;
 		require_once($META_FOLDER . 'metabox-itens.php');
 	}
+
+	function update_item_ajax() {
+		$post_id = $_POST['id'];
+		echo "AQUI...";
+		return "aqui...";
+	}
+	
 
 }
 

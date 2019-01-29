@@ -1,5 +1,5 @@
 <?php
-namespace funarte;
+namespace pontoColeta;
 
 class taxItem {
 	use Singleton;
