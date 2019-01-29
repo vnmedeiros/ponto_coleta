@@ -20,34 +20,45 @@
 	}
 ?>
 
-<div id="ex1" class="modal">
+<div id="modal-item" class="modal">
 	<div>
 		<form></form> <!-- pq o modal remove o primeiro form? -->
 		<form id="form_update_item">
 			<input type="hidden" name="itens_meta_custombox" id="itens_meta_custombox" value="<?php echo $nonce; ?>" />
 			<input type="hidden" name="post_id" id="post_id" value="<?php echo $post_id; ?>" />
-			
-			<label>Item:</label>
+			<p>
+			<label style="width: 60px;display: inline-block;">Item:</label>
 			<select name="item">
 				<?php foreach($terms as $term): ?>
 					<option value="<?php echo $term->term_id; ?>"><?php echo $term->name; ?></option>	
 				<?php endforeach; ?>
 			</select>
-			
-			<label>entrada:</label>
-			<input name="entrada" type="number" />
-
-			<label>saida:</label>
-			<input name="saida" type="number" />
-
+			</p><p>
+			<label style="width: 60px;display: inline-block;">entrada:</label>
+			<input name="entrada" type="number" value="0"/>
+			</p><p>
+			<label style="width: 60px;display: inline-block;">saida:</label>
+			<input name="saida" type="number" value="0"/>
+			</p><p>
 			<input type="submit" value="Adicionar" />
+			</p>
 		</form>
-		<a href="#" rel="modal:close">Fechar</a>
 	</div>
 </div>
 
+<div id="modal-resumo-pontos" class="modal">
+	<table id="tabela-resumo-pontos" class="display" width="100%" cellspacing="0">
+		<thead>
+			<tr>
+				<th>Ponto</th>
+				<th>Saldo</th>
+			</tr>
+		</thead>
+	</table>
+</div>
+
 <!-- Link to open the modal -->
-<p><a href="#ex1" rel="modal:open">Adicionar Item</a></p>
+<p><a href="#modal-item" rel="modal:open">Adicionar Item</a></p>
 
 <table id="ponto-itens" class="display" width="100%" cellspacing="0">
 	<thead>
@@ -56,6 +67,7 @@
 			<th>Entrada</th>
 			<th>Saida</th>
 			<th>Saldo</th>
+			<th>...</th>
 		</tr>
 	</thead>
 	<tbody>
@@ -65,6 +77,11 @@
 				<td> <?php echo $item['entrada']; ?> </td>
 				<td> <?php echo $item['saida']; ?> </td>
 				<td> <?php echo $item['saldo']; ?> </td>
+				<td>
+					<a class="btn-resumo-pontos" href="#modal-resumo-pontos" rel="modal:open" style="text-decoration: none;" data-term=<?php echo $item['term_id']; ?>>
+						<span class="dashicons dashicons-info"></span> 
+					</a>
+				</td>
 			</tr>
 		<?php endforeach; ?>
 	</tbody>
