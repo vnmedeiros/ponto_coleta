@@ -46,6 +46,10 @@
 			</select>
 		</fieldset>
 	</form>
+
+	<div class="box-estado">
+		
+	</div>
 </main>
 
 
@@ -62,66 +66,56 @@
 				type: 'GET',
 				url: ajaxurl + '?action=get_pontos_by_uf&uf=' + estado,
 				beforeSend: function() {
+					console.log('before');
 					//$boxMain.addClass('loading').removeClass('active');
 				},
 				error: function() {
+					console.log('error');
 					// $boxMain.removeClass('loading');
-					// $box.html('<span class="box-calendario__message">Não foi encontrado nenhum evento no dia selecionado.</span>');
+					jQuery('.box-estado').html('<ul class="postos-lista"><li><strong>Ocorreu um erro. Tente novamente mais tarde.</strong></li></ul>');
 				},
 				success: function(html) {
-					console.log('html: ', html);
-					// var slides = JSON.parse(html),
-					// 	dataInicialSeparada,
-					// 	dataFinalSeparada;
+					console.log('success');
+					var estrutura = '<ul class="postos-lista">',
+						contador = 0;
 
-					// $.each(slides,function(i, slide) {
-						
-					// 	dataInicialSeparada = slide.dataInicial.split('/');
-					// 	dataFinalSeparada = slide.dataFinal.split('/');
+					jQuery.each(html,function(i, info) {
+						console.log('i: ',i);
+						console.log('info: ',info);
 
-					// 	mesInicial = base.calendario.transformarMes(dataInicialSeparada[1]);
-					// 	mesFinal = base.calendario.transformarMes(dataFinalSeparada[1]);
-						
-					// 	var dataString = dataInicialSeparada[0] + '/' + mesInicial;
-					// 	if (slide.dataInicial != slide.dataFinal) {
-					// 		dataString += ' - ' + dataFinalSeparada[0] + '/' + mesFinal;
-					// 	}
+						estrutura += '<li>\
+											<strong>' + info.titulo + '</strong>\
+											<span>' + info.endereco.endereco + ' - ' + info.endereco.cidade + '</span>\
+											<span>' + info.endereco.telefone + '</span>\
+											<span>' + info.endereco.email + '</span>';
 
-					// 	estrutura += '<li class="color-' + slide.areaSlug + '">\
-					// 					<h3 class="box-calendario__data" data-inicial="' + slide.dataInicial + '" data-final="' + slide.dataFinal + '">' + dataString + '</h3>\
-					// 					<h4 class="box-calendario__titulo">' + slide.titulo + '</h4>\
-					// 					<hr>\
-					// 					<div class="box-calendario__imagem" style="background-image: url(' + slide.imagem + ');">\
-					// 						<div class="link-area">\
-					// 							<a href="' + slide.areaLink + '">' + slide.areaSlug + '</a>\
-					// 						</div>\
-					// 					</div>\
-					// 					<div class="box-calendario__linha">\
-					// 						<div class="box-calendario__coluna-1">\
-					// 							<span class="box-calendario__time">' + slide.horario + '</span>\
-					// 							<span class="box-calendario__pin">' + slide.endereco + '</span>\
-					// 						</div>\
-					// 						<div class="box-calendario__coluna-2">\
-					// 							<p>' + slide.texto + '</p>\
-					// 							<a class="link-more" href="' + slide.url + '">Ler mais</a>\
-					// 						</div>\
-					// 					</div>\
-					// 				</li>';
+						if (info.itens.length > 0) {
+							estrutura += '<table>\
+												<thead>\
+													<tr><td>Item</td><td>Entrada</td><td>Saída</td><td>Saldo</td></tr>\
+												</thead>\
+												<tbody>';
 
-					// 	contador++;
-						
-					// });
+							console.log('info.itens: ',info.itens.length);
 
-					// if (contador <= 0) {
-					// 	estrutura += '<li><h4 class="box-calendario__titulo">Não foi encontrado nenhum evento no dia selecionado.</h4></li>';
-					// }
+							jQuery.each(info.itens,function(i, dado) {
+								estrutura += '<tr><td>' + dado.term_name + '</td><td>' + dado.entrada + '</td><td>' + dado.saida + '</td><td>' + dado.saldo + '</td></tr>';
+							});
 
-					// estrutura += '</ul>';
+							estrutura += '</tbody></table></li>';
+						}
 
-					// $box.append(estrutura);
+						contador++;
+					});
 
-					// base.carrossel.iniciarCalendarioCompacto();
-					// $datepicker.datepicker('refresh');
+					if (contador <= 0) {
+						estrutura += '<li><span>Não foi encontrado nenhum ponto no estado selecionado.</span>';
+					}
+
+					estrutura += '</ul>';
+
+					jQuery('.box-estado').html(estrutura);
+
 					// $boxMain.removeClass('loading');
 				}
 			});

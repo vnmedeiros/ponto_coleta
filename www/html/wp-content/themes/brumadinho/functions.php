@@ -4,6 +4,7 @@ function add_files() {
 	wp_enqueue_script('jquery');
 	wp_enqueue_script( 'jquery-ui-datepicker', array( 'jquery' ) );
 	// CSS
+	wp_enqueue_style('base-style', get_theme_file_uri() . '/assets/css/base.css');
 	wp_enqueue_style('datatables-style', get_theme_file_uri() . '/assets/css/datatables.min.css');
 	wp_enqueue_style('jquery-modal-style', 'https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.css');
 	// Javascript	
