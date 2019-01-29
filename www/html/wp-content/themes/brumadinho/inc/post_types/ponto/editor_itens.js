@@ -14,8 +14,29 @@ jQuery(document).ready( function () {
 				jQuery.modal.close();
 			},
 			error: function(e) {
-				console.log("erro....");
+				console.log("error inesperado");
 			}
 		});
 	});
+	
+	jQuery('.btn-resumo-pontos').click(function(e) {
+		jQuery.ajax({
+			type: "GET",
+			url: ajaxurl,
+			data: `action=get_pontos_by_term&term_id=${this.dataset['term']}`,
+			success: function(data) {
+				console.log(data);
+				jQuery('#tabela-resumo-pontos').DataTable().destroy();
+				jQuery('#tabela-resumo-pontos').empty();
+				tabela_resumo_pontos = jQuery('#tabela-resumo-pontos').DataTable( {
+					data: data,
+					columns: [
+							{ data: 'title' },
+							{ data: 'item.saldo' }
+					]
+			} );
+			}
+		});
+	});
+
 });

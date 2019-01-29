@@ -7,6 +7,10 @@ class PontoColeta {
 	private $POST_TYPE = "ponto-coleta";
 	private $prefix = 'itens';
 
+	public function get_post_type() {
+		return $this->POST_TYPE;
+	}
+
 	protected function init() {
 		add_action('init', array( &$this, "register_post_type" ));
 		add_action('add_meta_boxes', array(&$this, 'add_custom_box'));
@@ -49,7 +53,7 @@ class PontoColeta {
 			'exclude_from_search' => false,
 			'supports' => array('title'),
 			'taxonomies' => [
-				taxItem::get_instance()->get_name()
+				//taxItem::get_instance()->get_name()
 			]
 		);
 
@@ -138,6 +142,10 @@ class PontoColeta {
 			wp_send_json_error("data not found");
 			return $post_id;
 		}
+		if ($post_entrada < 0 || $post_saida < 0) {
+			wp_send_json_error("invalid data");
+			return $post_id;
+		}
 		if (!current_user_can('edit_post', $post_id)) {
 			wp_send_json_error("user can't edit");
 		 	return $post_id;
@@ -160,7 +168,7 @@ class PontoColeta {
 
 	function get_pontos_by_UF() {
 		if (empty($_GET)) {
-			wp_send_json_error('asdf');
+			wp_send_json_error('error ao recuperar pontos de coleta');
 			return false;
 		}
 		$UF = strtoupper($_GET['uf']);
