@@ -58,6 +58,9 @@ class PontoColeta {
 	public function add_custom_box() {
 		add_meta_box('itens_custombox', __( 'Itens do ponto de coleta'),
 					array(&$this, 'itens_custom_box'), $this->POST_TYPE, 'normal', 'high');
+		
+		add_meta_box('endereco_custombox', __( 'endereço do ponto de coleta'),
+					array(&$this, 'endereco_custom_box'), $this->POST_TYPE, 'normal', 'high');
 	}
 
 	public function save_custom_box($post_id) {
@@ -75,6 +78,21 @@ class PontoColeta {
 		require_once($META_FOLDER . 'metabox-itens.php');
 	}
 
+	public function endereco_custom_box() {
+		global $post;
+		$endereco = ['uf'=>"", 'cidade'=>"", 'endereco'=>"", 'telefone'=>"", 'email'=>""];
+		$endereco = [	'uf' 			=> get_post_meta($post->ID, "ponto-uf", true),
+									'cidade'	=> get_post_meta($post->ID, "ponto-cidade", true),
+									'endereco'=> get_post_meta($post->ID, "ponto-endereco", true),
+									'telefone'=> get_post_meta($post->ID, "ponto-telefone", true),
+									'email'		=> get_post_meta($post->ID, "ponto-email", true)];
+
+		$THEME_FOLDER = get_template_directory();
+		$DS = DIRECTORY_SEPARATOR;
+		$META_FOLDER = $THEME_FOLDER . $DS . 'inc' . $DS . 'post_types' . $DS . 'ponto' . $DS;
+		require_once($META_FOLDER . 'metabox-endereco.php');
+	}
+
 	public function save_endereco_custom_box($post_id) {
 		if (empty($_POST)) {
 			return $post_id;
@@ -88,8 +106,16 @@ class PontoColeta {
 		if (!current_user_can('edit_post', $post_id)) {
 			return $post_id;
 		}
-		update_post_meta($post_id, 'ponto-uf', 'BA');
-		return true;
+		$fields = array('cidade', 'endereco', 'telefone', 'email');
+		$endereco = $_POST['endereco'];
+		foreach ($endereco as $field => &$value) {
+			if (in_array($field, $fields)) {
+				update_post_meta($post_id, "ponto-$field", $value);
+			}
+		}
+		$value = $_POST['endereco-estado'];
+		update_post_meta($post_id, "ponto-uf", $value);
+		return $endereco;
 	}
 
 	function update_item_ajax() {
@@ -151,6 +177,7 @@ class PontoColeta {
 			$title = get_the_title();
 			$itens = $this->get_itens(get_the_ID());
 			$pontos[] = [	'titulo' => $title, 
+										'ebdereco' => $this->get_endereco(get_the_ID()),
 										'itens' => $itens ];
 		}
 		wp_reset_query();
@@ -171,6 +198,15 @@ class PontoColeta {
 			}
 		}
 		return $itens;
+	}
+
+	private function get_endereco($post_id) {
+		$endereco = [	'uf' 			=> get_post_meta($post_id, "ponto-uf", true),
+									'cidade'	=> get_post_meta($post_id, "ponto-cidade", true),
+									'endereco'=> get_post_meta($post_id, "ponto-endereco", true),
+									'telefone'=> get_post_meta($post_id, "ponto-telefone", true),
+									'email'		=> get_post_meta($post_id, "ponto-email", true)];
+		return $endereco;
 	}
 
 }
