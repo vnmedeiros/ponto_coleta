@@ -5,12 +5,14 @@ class PontoColeta {
 	use Singleton;
 
 	private $POST_TYPE = "ponto-coleta";
+	private $prefix = 'itens';
 
 	protected function init() {
 		add_action('init', array( &$this, "register_post_type" ));
 		add_action('add_meta_boxes', array(&$this, 'add_custom_box'));
-		// add_action('save_post', array(&$this, 'save_custom_box'));
+		add_action('save_post', array(&$this, 'save_custom_box'));
 		add_action('wp_ajax_update_item', array(&$this, 'update_item_ajax'));
+		add_action('wp_ajax_nopriv_get_pontos_by_uf', array(&$this, 'get_pontos_by_UF'));
 	}
 
 	public function register_post_type() {
@@ -58,41 +60,118 @@ class PontoColeta {
 					array(&$this, 'itens_custom_box'), $this->POST_TYPE, 'normal', 'high');
 	}
 
-	// public function save_custom_box($post_id) {
-	// 	global $post;
-	// 	if ($post && $post->post_type != $this->POST_TYPE) {
-	// 		return $post_id;
-	// 	}
-	// 	$this->save_espaco_cultural_custom_box($post_id);
-	// }
+	public function save_custom_box($post_id) {
+		global $post;
+		if ($post && $post->post_type != $this->POST_TYPE) {
+			return $post_id;
+		}
+		$this->save_endereco_custom_box($post_id);
+	}
 
 	public function itens_custom_box() {
-		global $post;
-		$nonce = wp_create_nonce(__FILE__);
-		$prefix = 'itens';
-		$itens = get_post_meta($post->ID, "{$prefix}-saldo", true);
-		if ($post->ID && empty($espaco)) {
-			$espaco = [
-				// "item_slug" => [
-				// 	'item_descricao' 			=> "",
-				// 	'quantidade entrada' 	=> 0,
-				// 	'quantidade saida' 		=> 0,
-				// 	'saldo' 							=> 0]
-			];
-		}
-
 		$THEME_FOLDER = get_template_directory();
 		$DS = DIRECTORY_SEPARATOR;
 		$META_FOLDER = $THEME_FOLDER . $DS . 'inc' . $DS . 'post_types' . $DS . 'ponto' . $DS;
 		require_once($META_FOLDER . 'metabox-itens.php');
 	}
 
-	function update_item_ajax() {
-		$post_id = $_POST['id'];
-		echo "AQUI...";
-		return "aqui...";
+	public function save_endereco_custom_box($post_id) {
+		if (empty($_POST)) {
+			return $post_id;
+		}
+		// if (!wp_verify_nonce($_POST['itens_meta_custombox'], __FILE__)) {
+		// 	return $post_id;
+		// }
+		if (defined('DOING_AUTOSAVE') && DOING_AUTOSAVE) {
+			return $post_id;
+		}
+		if (!current_user_can('edit_post', $post_id)) {
+			return $post_id;
+		}
+		update_post_meta($post_id, 'ponto-uf', 'BA');
+		return true;
 	}
-	
+
+	function update_item_ajax() {
+		if (empty($_POST)) {
+			wp_send_json_error();
+			return false;
+		}
+
+		$post_id			= $_POST['post_id'];
+		$post_item		= $_POST['item'];
+		$post_entrada = $_POST['entrada'];
+		$post_saida 	= $_POST['saida'];
+
+		// if (!wp_verify_nonce($_POST['itens_meta_custombox'], __FILE__)) {
+		// 	wp_send_json_error("verify_nonce");
+		// 	return $post_id;
+		// }
+		if (!isset($post_id) ||	!isset($post_item) || !isset($post_entrada) ||	!isset($post_saida)) {
+			wp_send_json_error("data not found");
+			return $post_id;
+		}
+		if (!current_user_can('edit_post', $post_id)) {
+			wp_send_json_error("user can't edit");
+		 	return $post_id;
+		}
+
+		$key_meta = "$this->prefix-$post_item";
+		$value = ['entrada'	=>	$post_entrada,
+							'saida'		=>	$post_saida,
+							'saldo'		=>	($post_entrada - $post_saida)];
+
+		$item = get_post_meta($post_id, $key_meta, true);
+		if (!empty($item)) {
+			$value['entrada']	= $item['entrada'] + $value['entrada'];
+			$value['saida']		= $item['saida'] + $value['saida'];
+			$value['saldo']		= $value['entrada'] - $value['saida'];
+		}
+		update_post_meta($post_id, $key_meta, $value);
+		wp_send_json([$key_meta => $value], 201);
+	}
+
+	function get_pontos_by_UF() {
+		if (empty($_GET)) {
+			wp_send_json_error();
+			return false;
+		}
+		$UF = strtoupper($_GET['uf']);
+
+		$args = array(
+			'post_type' => $this->POST_TYPE,
+			'meta_query' => array(
+				array('key' => 'ponto-uf', 'value' => $UF, 'compare' => '=')
+			)
+		);
+		$loop = new \WP_Query($args);
+		$pontos = [];
+		while ( $loop->have_posts() ) {
+			$loop->the_post();
+			$title = get_the_title();
+			$itens = $this->get_itens(get_the_ID());
+			$pontos[] = [	'titulo' => $title, 
+										'itens' => $itens ];
+		}
+		wp_reset_query();
+		wp_send_json($pontos, 200);
+	}
+
+	private function get_itens($post_id) {
+		$post_metas = get_post_meta($post_id);
+		$itens = [];
+		foreach ($post_metas as $key => $element) {
+			$exp_key = explode('-', $key);
+			if($exp_key[0] == 'itens') {
+				$item = unserialize($element[0]);
+				$item['term_id'] = $exp_key[1];
+				$term_name = get_term($item['term_id'], taxItem::get_instance()->get_name())->name;
+				$item['term_name'] = $term_name;
+				$itens[] = $item;
+			}
+		}
+		return $itens;
+	}
 
 }
 
