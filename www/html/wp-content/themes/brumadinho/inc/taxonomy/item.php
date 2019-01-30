@@ -13,6 +13,12 @@ class taxItem {
 		add_action('init', array( &$this, "register_taxonomy" ), 9);
 		add_action('wp_ajax_get_pontos_by_term', array(&$this, 'get_pontos_by_term'));
 		add_action('wp_ajax_nopriv_get_pontos_by_term', array(&$this, 'get_pontos_by_term'));
+		
+		// Add the fields to taxonomy, using our callback function
+		add_action( $this->name."_edit_form_fields", array(&$this, 'edit_taxonomy_custom_fields'), 10, 2);
+		add_action( $this->name."_add_form_fields",  array(&$this, 'add_taxonomy_custom_fields'), 10, 1);
+		// Save the changes made on taxonomy, using our callback function
+		add_action( 'edited_'.$this->name, array(&$this, 'save_taxonomy_custom_fields'), 10, 2 );
 	}
 
 	public function register_taxonomy() {
@@ -42,6 +48,51 @@ class taxItem {
 				'query_var' => true
 			)
 		);
+	}
+
+	function add_taxonomy_custom_fields($taxonomy) {
+		?>
+		<tr class="form-field">
+			<th scope="row" valign="top">
+					<label for="unidade"><?php _e('Unidade'); ?></label>
+			</th>
+			<td>
+					<input type="text" name="term_meta[unidade]" id="term_meta[unidade]" size="25" style="width:60%;" value="un"><br />
+			</td>
+		</tr>
+		<?php
+	}
+
+	function edit_taxonomy_custom_fields($term, $taxonomy) {
+		// Check for existing taxonomy meta for the term you're editing
+		$t_id = $term->term_id; // Get the ID of the term you're editing
+		$term_meta = get_option( "taxonomy_term_$t_id" ); // Do the check
+		?>
+		<tr class="form-field">
+			<th scope="row" valign="top">
+					<label for="unidade"><?php _e('Unidade'); ?></label>
+			</th>
+			<td>
+					<input type="text" name="term_meta[unidade]" id="term_meta[unidade]" size="25" style="width:60%;" value="<?php echo $term_meta['unidade'] ? $term_meta['unidade'] : 'un'; ?>"><br />
+			</td>
+		</tr>
+		<?php
+	}
+
+	// A callback function to save our extra taxonomy field(s)
+	function save_taxonomy_custom_fields( $term_id, $tt_id ) {
+		if ( isset( $_POST['term_meta'] ) ) {
+			$t_id = $term_id;
+			$term_meta = get_option( "taxonomy_term_$t_id" );
+			$keys = array_keys( $_POST['term_meta'] );
+			foreach ( $keys as $key ){
+				if ( isset( $_POST['term_meta'][$key] ) ){
+					$term_meta[$key] = $_POST['term_meta'][$key];
+				}
+			}
+			//save the option array
+			update_option( "taxonomy_term_$t_id", $term_meta );
+		}
 	}
 
 	public function get_pontos_by_term() {

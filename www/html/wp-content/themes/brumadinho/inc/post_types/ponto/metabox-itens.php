@@ -119,7 +119,7 @@
 				<td class="saida"> <?php echo $item['saida']; ?> </td>
 				<td class="saldo"> <?php echo $item['saldo']; ?> </td>
 				<td>
-					<a class="btn-editar-item" href="#modal-editar-item" style="color: #399244 !important;" rel="modal:open" style="text-decoration: none;"
+					<a class="btn-editar-item" href="#modal-editar-item" style="color: #399244 !important; text-decoration: none;" rel="modal:open" style="text-decoration: none;"
 						 data-termid="<?php echo $item['term_id']; ?>"
 						 data-termname="<?php echo $item['term_name']; ?>"
 						 data-term_necessidade="<?php echo $item['necessidade']; ?>"
