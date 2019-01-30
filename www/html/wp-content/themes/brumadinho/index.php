@@ -47,9 +47,7 @@
 		</fieldset>
 	</form>
 
-	<div class="box-estado">
-		
-	</div>
+	<div class="box-estado"></div>
 </main>
 
 <?php
