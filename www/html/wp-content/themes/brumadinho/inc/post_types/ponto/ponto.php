@@ -53,7 +53,7 @@ class PontoColeta {
 			'exclude_from_search' => false,
 			'supports' => array('title'),
 			'taxonomies' => [
-				//taxItem::get_instance()->get_name()
+				taxItem::get_instance()->get_name()
 			]
 		);
 
