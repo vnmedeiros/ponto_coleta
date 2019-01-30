@@ -33,10 +33,13 @@ class taxItem {
 			"None",
 			array(
 				'hierarchical' => true,
+				'public' => true,
 				'labels' => $labels,
 				'show_ui' => true,
-				'query_var' => true,
-				'rewrite' => false
+				'show_in_menu' => true,
+				'menu_position' => 5,
+				'show_in_rest' => true,
+				'query_var' => true
 			)
 		);
 	}

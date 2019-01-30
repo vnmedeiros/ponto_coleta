@@ -129,10 +129,11 @@ class PontoColeta {
 			return false;
 		}
 
-		$post_id			= $_POST['post_id'];
-		$post_item		= $_POST['item'];
-		$post_entrada = $_POST['entrada'];
-		$post_saida 	= $_POST['saida'];
+		$post_id					= $_POST['post_id'];
+		$post_item				= $_POST['item'];
+		$post_entrada			= $_POST['entrada'];
+		$post_saida				= $_POST['saida'];
+		$post_necessidade	= $_POST['necessidade'];
 
 		// if (!wp_verify_nonce($_POST['itens_meta_custombox'], __FILE__)) {
 		// 	wp_send_json_error("verify_nonce");
@@ -152,15 +153,20 @@ class PontoColeta {
 		}
 
 		$key_meta = "$this->prefix-$post_item";
-		$value = ['entrada'	=>	$post_entrada,
-							'saida'		=>	$post_saida,
-							'saldo'		=>	($post_entrada - $post_saida)];
+		$value = ['entrada'			=>	$post_entrada,
+							'saida'				=>	$post_saida,
+							'saldo'				=>	($post_entrada - $post_saida),
+							'necessidade'	=>	$post_necessidade];
 
 		$item = get_post_meta($post_id, $key_meta, true);
 		if (!empty($item)) {
-			$value['entrada']	= $item['entrada'] + $value['entrada'];
-			$value['saida']		= $item['saida'] + $value['saida'];
-			$value['saldo']		= $value['entrada'] - $value['saida'];
+			$value['entrada']	= $item['entrada']	+ $value['entrada'];
+			$value['saida']		= $item['saida']		+ $value['saida'];
+			$value['saldo']		= $value['entrada']	- $value['saida'];
+		}
+		if ($value['saldo'] < 0) {
+			wp_send_json_error("Saldo Negativo");
+		 	return $post_id;
 		}
 		update_post_meta($post_id, $key_meta, $value);
 		wp_send_json([$key_meta => $value], 201);

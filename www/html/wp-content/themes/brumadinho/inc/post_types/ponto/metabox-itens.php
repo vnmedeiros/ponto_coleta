@@ -20,27 +20,60 @@
 	}
 ?>
 
-<div id="modal-item" class="modal">
+<div id="modal-editar-item" class="modal">
 	<div>
 		<form></form> <!-- pq o modal remove o primeiro form? -->
 		<form id="form_update_item">
 			<input type="hidden" name="itens_meta_custombox" id="itens_meta_custombox" value="<?php echo $nonce; ?>" />
 			<input type="hidden" name="post_id" id="post_id" value="<?php echo $post_id; ?>" />
+			<input type="hidden" name="item" id="item_id" value="-1" />
 			<p>
-			<label style="width: 60px;display: inline-block;">Item:</label>
-			<select name="item">
-				<?php foreach($terms as $term): ?>
-					<option value="<?php echo $term->term_id; ?>"><?php echo $term->name; ?></option>	
-				<?php endforeach; ?>
-			</select>
+				<label style="width: 100px;display: inline-block;">Item:</label>
+				<input type="text" name="item_name" id="item_name" disabled style="min-width: 300px;"/>
 			</p><p>
-			<label style="width: 60px;display: inline-block;">entrada:</label>
-			<input name="entrada" type="number" value="0" min="0"/>
+				<label style="width: 100px;display: inline-block;">entrada:</label>
+				<input name="entrada" type="number" value="0" min="0"/>
 			</p><p>
-			<label style="width: 60px;display: inline-block;">saida:</label>
-			<input name="saida" type="number" value="0" min="0"/>
+				<label style="width: 100px;display: inline-block;">saida:</label>
+				<input name="saida" type="number" value="0" min="0"/>
 			</p><p>
-			<input type="submit" value="Adicionar" />
+				<label style="width: 100px;display: inline-block;">Grau de necessidade:</label>
+				<select name="necessidade">
+						<option value="0">Alta</option>
+						<option value="1">Média</option>
+						<option value="2">Baixa</option>
+				</select>
+			</p><p>
+				<input type="submit" value="Adicionar" />
+			</p>
+		</form>
+	</div>
+</div>
+
+<div id="modal-adicionar-item" class="modal">
+	<div>
+		<form></form> <!-- pq o modal remove o primeiro form? -->
+		<form id="form_adicionar_item">
+			<input type="hidden" name="itens_meta_custombox" id="itens_meta_custombox" value="<?php echo $nonce; ?>" />
+			<input type="hidden" name="post_id" id="post_id" value="<?php echo $post_id; ?>" />
+			<input type="hidden" name="entrada" value="0" min="0"/>
+			<input type="hidden" name="saida" value="0" min="0"/>
+			<p>
+				<label style="width: 100px;display: inline-block;">Item:</label>
+				<select name="item" style="min-width: 300px;">
+					<?php foreach($terms as $term): ?>
+						<option value="<?php echo $term->term_id; ?>"><?php echo $term->name; ?></option>
+					<?php endforeach; ?>
+				</select>
+			</p><p>
+				<label style="width: 100px;display: inline-block;">Grau de necessidade:</label>
+				<select name="necessidade">
+						<option value="0">Alta</option>
+						<option value="1">Média</option>
+						<option value="2">Baixa</option>
+				</select>
+			</p><p>
+				<input type="submit" value="Adicionar" />
 			</p>
 		</form>
 	</div>
@@ -58,11 +91,12 @@
 </div>
 
 <!-- Link to open the modal -->
-<p><a href="#modal-item" rel="modal:open">Adicionar Item</a></p>
+<p><a href="#modal-adicionar-item" rel="modal:open">Adicionar Item</a></p>
 
 <table id="ponto-itens" class="display" width="100%" cellspacing="0">
 	<thead>
 		<tr>
+			<th>Necessidade</th>
 			<th>Item</th>
 			<th>Entrada</th>
 			<th>Saida</th>
@@ -72,12 +106,26 @@
 	</thead>
 	<tbody>
 		<?php foreach ($itens as $item): ?>
-			<tr>
+			<tr class="<?php echo "term-".$item['term_id']; ?>">
+				<td class="necessidade">
+					<?php
+						if ($item['necessidade'] == 0 ) echo "Alta";
+						if ($item['necessidade'] == 1 ) echo "Média";
+						if ($item['necessidade'] == 2 ) echo "Baixa";
+					?>
+				</td>
 				<td> <?php echo $item['term_name']; ?> </td>
-				<td> <?php echo $item['entrada']; ?> </td>
-				<td> <?php echo $item['saida']; ?> </td>
-				<td> <?php echo $item['saldo']; ?> </td>
+				<td class="entrada"> <?php echo $item['entrada']; ?> </td>
+				<td class="saida"> <?php echo $item['saida']; ?> </td>
+				<td class="saldo"> <?php echo $item['saldo']; ?> </td>
 				<td>
+					<a class="btn-editar-item" href="#modal-editar-item" style="color: #399244 !important;" rel="modal:open" style="text-decoration: none;"
+						 data-termid="<?php echo $item['term_id']; ?>"
+						 data-termname="<?php echo $item['term_name']; ?>"
+						 data-term_necesidade="<?php echo $item['necessidade']; ?>"
+						 >
+						<span class="dashicons dashicons-welcome-write-blog"></span>
+					</a>
 					<a class="btn-resumo-pontos" href="#modal-resumo-pontos" rel="modal:open" style="text-decoration: none;" data-term=<?php echo $item['term_id']; ?>>
 						<span class="dashicons dashicons-info"></span> 
 					</a>
