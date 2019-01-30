@@ -19,7 +19,7 @@ jQuery(document).ready( function () {
 
 				jQuery(`.term-${data.item}`).find('.necessidade').text(necessidade);
 				jQuery(`.term-${data.item}`).find('.entrada').text(parseInt(jQuery(`.term-${data.item}`).find('.entrada').html()) + parseInt(data.entrada));
-				jQuery(`.term-${data.item}`).find('.saida').text(parseInt(jQuery(`.term-${data.item}`).find('.saida').html()) + parseInt(data.entrada));
+				jQuery(`.term-${data.item}`).find('.saida').text(parseInt(jQuery(`.term-${data.item}`).find('.saida').html()) + parseInt(data.saida));
 				jQuery(`.term-${data.item}`).find('.saldo').text(
 				parseInt(jQuery(`.term-${data.item}`).find('.saldo').html()) + (parseInt(data.entrada)-parseInt(data.saida)));
 				jQuery(`.term-${data.item}`).find('a.btn-editar-item').attr('data-term_necessidade', data.necessidade);
