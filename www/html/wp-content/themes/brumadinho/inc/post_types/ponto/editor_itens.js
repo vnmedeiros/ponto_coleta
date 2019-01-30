@@ -14,14 +14,15 @@ jQuery(document).ready( function () {
 				}
 				var data = dataArray;
 				var necessidade = "Alta";
-				if (data.necessidade = 1) necessidade = "Média";
-				else if (data.necessidade = 2) necessidade = "Baixa";
+				if (data.necessidade == 1) necessidade = "Média";
+				else if (data.necessidade == 2) necessidade = "Baixa";
 
 				jQuery(`.term-${data.item}`).find('.necessidade').text(necessidade);
 				jQuery(`.term-${data.item}`).find('.entrada').text(parseInt(jQuery(`.term-${data.item}`).find('.entrada').html()) + parseInt(data.entrada));
 				jQuery(`.term-${data.item}`).find('.saida').text(parseInt(jQuery(`.term-${data.item}`).find('.saida').html()) + parseInt(data.entrada));
 				jQuery(`.term-${data.item}`).find('.saldo').text(
 				parseInt(jQuery(`.term-${data.item}`).find('.saldo').html()) + (parseInt(data.entrada)-parseInt(data.saida)));
+				jQuery(`.term-${data.item}`).find('a.btn-editar-item').attr('data-term_necessidade', data.necessidade);
 				document.getElementById("form_update_item").reset();
 				jQuery.modal.close();
 			},
@@ -50,6 +51,8 @@ jQuery(document).ready( function () {
 	jQuery('.btn-editar-item').click(function(e){
 		jQuery('#item_id').val(this.dataset['termid']);
 		jQuery('#item_name').val(this.dataset['termname']);
+		//console.log(this.dataset['term_necessidade'])
+		jQuery('#modal-editar-item .necessidade').val(this.dataset['term_necessidade']);
 	});
 	
 	jQuery('.btn-resumo-pontos').click(function(e) {
