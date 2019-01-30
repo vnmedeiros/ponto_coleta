@@ -38,7 +38,7 @@
 				<input name="saida" type="number" value="0" min="0"/>
 			</p><p>
 				<label style="width: 100px;display: inline-block;">Grau de necessidade:</label>
-				<select name="necessidade">
+				<select name="necessidade" class="necessidade">
 						<option value="0">Alta</option>
 						<option value="1">Média</option>
 						<option value="2">Baixa</option>
@@ -122,7 +122,7 @@
 					<a class="btn-editar-item" href="#modal-editar-item" style="color: #399244 !important;" rel="modal:open" style="text-decoration: none;"
 						 data-termid="<?php echo $item['term_id']; ?>"
 						 data-termname="<?php echo $item['term_name']; ?>"
-						 data-term_necesidade="<?php echo $item['necessidade']; ?>"
+						 data-term_necessidade="<?php echo $item['necessidade']; ?>"
 						 >
 						<span class="dashicons dashicons-welcome-write-blog"></span>
 					</a>
