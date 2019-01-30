@@ -3,7 +3,7 @@
 ?>
 
 <header>
-	<h1><a href="<?php echo home_url(); ?>"><img src="<?php echo get_template_directory_uri() . '/assets/img/lgo/ibict.jpg' ?>" alt="Ibict"></a></h1>
+	<h1><a href="<?php echo home_url(); ?>"><img src="<?php echo get_template_directory_uri() . '/assets/img/lgo/ibict.png' ?>" alt="Ibict - Instituto Brasileiro de Informação em Ciência e Tecnologia"></a></h1>
 
 	<h2>Pontos de coleta de doações para Brumadinho</h2>
 </header>

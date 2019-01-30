@@ -22,6 +22,7 @@ function ativarAjax() {
 				},
 				success: function(html) {
 					var estrutura = '<ul class="postos-lista">',
+						necessidade = '',
 						contador = 0;
 
 					jQuery.each(html,function(i, info) {
@@ -35,12 +36,26 @@ function ativarAjax() {
 						if (info.itens.length > 0) {
 							estrutura += '<table>\
 												<thead>\
-													<tr><td>Item</td><td>Entrada</td><td>Saída</td><td>Saldo</td></tr>\
+													<tr><td>Item</td><td>Necessidade</td></tr>\
 												</thead>\
 												<tbody>';
 
+							info.itens.sort(function(a, b){return a.necessidade - b.necessidade});
+
 							jQuery.each(info.itens,function(i, dado) {
-								estrutura += '<tr><td>' + dado.term_name + '</td><td>' + dado.entrada + '</td><td>' + dado.saida + '</td><td>' + dado.saldo + '</td></tr>';
+								switch(dado.necessidade) {
+									case '0':
+										necessidade = 'Alta';
+										break;
+									case '1':
+										necessidade = 'Média';
+										break;
+									case '2':
+										necessidade = 'Baixa';
+										break;
+								}
+
+								estrutura += '<tr><td>' + dado.term_name + '</td><td>' + necessidade + '</td></tr>';
 							});
 
 							estrutura += '</tbody></table>';

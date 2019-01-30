@@ -63,10 +63,10 @@ main {
 */
 
 header { padding: 50px 15px; }
-h1 { margin-bottom: 100px; }
+h1 { margin-bottom: 40px; }
 h1 img {
 	width: 100%;
-	max-width: 491px;
+	max-width: 200px;
 	display: block;
 }
 
