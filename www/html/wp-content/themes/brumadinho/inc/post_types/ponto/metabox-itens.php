@@ -28,16 +28,16 @@
 			<input type="hidden" name="post_id" id="post_id" value="<?php echo $post_id; ?>" />
 			<input type="hidden" name="item" id="item_id" value="-1" />
 			<p>
-				<label style="width: 60px;display: inline-block;">Item:</label>
-				<input type="text" name="item_name" id="item_name"  disabled />
+				<label style="width: 100px;display: inline-block;">Item:</label>
+				<input type="text" name="item_name" id="item_name" disabled style="min-width: 300px;"/>
 			</p><p>
-				<label style="width: 60px;display: inline-block;">entrada:</label>
+				<label style="width: 100px;display: inline-block;">entrada:</label>
 				<input name="entrada" type="number" value="0" min="0"/>
 			</p><p>
-				<label style="width: 60px;display: inline-block;">saida:</label>
+				<label style="width: 100px;display: inline-block;">saida:</label>
 				<input name="saida" type="number" value="0" min="0"/>
 			</p><p>
-				<label style="width: 60px;display: inline-block;">Grau de necessidade:</label>
+				<label style="width: 100px;display: inline-block;">Grau de necessidade:</label>
 				<select name="necessidade">
 						<option value="0">Alta</option>
 						<option value="1">Média</option>
@@ -59,14 +59,14 @@
 			<input type="hidden" name="entrada" value="0" min="0"/>
 			<input type="hidden" name="saida" value="0" min="0"/>
 			<p>
-				<label style="width: 60px;display: inline-block;">Item:</label>
-				<select name="item">
+				<label style="width: 100px;display: inline-block;">Item:</label>
+				<select name="item" style="min-width: 300px;">
 					<?php foreach($terms as $term): ?>
 						<option value="<?php echo $term->term_id; ?>"><?php echo $term->name; ?></option>
 					<?php endforeach; ?>
 				</select>
 			</p><p>
-				<label style="width: 60px;display: inline-block;">Grau de necessidade:</label>
+				<label style="width: 100px;display: inline-block;">Grau de necessidade:</label>
 				<select name="necessidade">
 						<option value="0">Alta</option>
 						<option value="1">Média</option>
