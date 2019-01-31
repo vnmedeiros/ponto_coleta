@@ -3,8 +3,8 @@ jQuery(document).ready(function() {
 });
 
 function ativarAjax() {
-	jQuery('#estado-lista').on('change',function() {
-		var estado = jQuery(this).val(),
+	jQuery('.form-estado').on('submit',function() {
+		var estado = jQuery('#estado-lista').val(),
 			$box = jQuery('.box-estado');
 
 		if (estado == '') {
@@ -21,7 +21,7 @@ function ativarAjax() {
 					$box.html('<ul class="postos-lista"><li><strong>Ocorreu um erro. Tente novamente mais tarde.</strong></li></ul>');
 				},
 				success: function(html) {
-					var estrutura = '<ul class="postos-lista">',
+					var estrutura = '<a href="#" id="inicio-ajax" class="sr-only">Início do conteúdo carregado dinamicamente. Os botões da lista abaixo exibem conteúdo escondido.</a><ul class="postos-lista">',
 						necessidade = '',
 						contador = 0;
 
@@ -29,12 +29,13 @@ function ativarAjax() {
 						estrutura += '<li>\
 											<button class="collapse-button" type="button"><strong>' + info.titulo + '</strong></button>\
 											<div class="box-collapse">\
+												<a href="#" class="inicio-escondido sr-only">Início do conteúdo escondido.</a>\
 												<span>' + info.endereco.endereco + ' - ' + info.endereco.cidade + '</span>\
 												<span>' + info.endereco.telefone + '</span>\
 												<span>' + info.endereco.email + '</span>';
 
 						if (info.itens.length > 0) {
-							estrutura += '<table>\
+							estrutura += '<a href="#" class="sr-only">Início da tabela de duas colunas.</a><table>\
 												<thead>\
 													<tr><td>Item</td><td>Necessidade</td></tr>\
 												</thead>\
@@ -58,10 +59,10 @@ function ativarAjax() {
 								estrutura += '<tr><td>' + dado.term_name + '</td><td>' + necessidade + '</td></tr>';
 							});
 
-							estrutura += '</tbody></table>';
+							estrutura += '</tbody></table><a href="#" class="sr-only">Fim da tabela de duas colunas.</a>';
 						}
 
-						estrutura += '</div></li>';
+						estrutura += '<a href="#" class="sr-only">Fim do conteúdo escondido.</a></div></li>';
 
 						contador++;
 					});
@@ -76,14 +77,17 @@ function ativarAjax() {
 
 					ativarCollapse();
 					$box.removeClass('loading');
+					jQuery('#inicio-ajax').focus();
 				}
 			});
 		}
+
+		return false;
 	});
 }
 
 function ativarCollapse() {
 	jQuery('.collapse-button').on('click',function() {
-		jQuery(this).siblings('.box-collapse').slideToggle(200);
+		jQuery(this).siblings('.box-collapse').slideToggle(200).find('.inicio-escondido').focus();
 	});
 }
