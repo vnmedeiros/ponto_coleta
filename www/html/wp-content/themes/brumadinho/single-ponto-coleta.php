@@ -16,26 +16,41 @@
 	}
 ?>
 	<main role="main">
-		<table width="100%" cellspacing="0">
-			<thead>
-				<tr>
-					<th>Item</th>
-					<th>Entrada</th>
-					<th>Saida</th>
-					<th>Saldo</th>
-				</tr>
-			</thead>
-			<tbody>
-				<?php foreach ($itens as $item): ?>
-					<tr>
-						<td> <?php echo $item['term_name']; ?> </td>
-						<td> <?php echo $item['entrada']; ?> </td>
-						<td> <?php echo $item['saida']; ?> </td>
-						<td> <?php echo $item['saldo']; ?> </td>
-					</tr>
-				<?php endforeach; ?>
-			</tbody>
-		</table>
+
+		<ul class="postos-lista postos-lista--type-b">
+			<li>
+				<button class="collapse-button" type="button"><strong>Ponto A</strong></button>
+				<div class="box-collapse active">
+					<span>Endereço completo, número 11 - Cidade</span>
+					<span>1111-1111</span>
+					<span>email@email.com</span>
+					<a href="#" class="sr-only">Início da tabela.</a>
+
+					<table width="100%" cellspacing="0">
+						<thead>
+							<tr>
+								<th>Item</th>
+								<th>Entrada</th>
+								<th>Saida</th>
+								<th>Saldo</th>
+							</tr>
+						</thead>
+						<tbody>
+							<?php foreach ($itens as $item): ?>
+								<tr>
+									<td> <?php echo $item['term_name']; ?> </td>
+									<td> <?php echo $item['entrada']; ?> </td>
+									<td> <?php echo $item['saida']; ?> </td>
+									<td> <?php echo $item['saldo']; ?> </td>
+								</tr>
+							<?php endforeach; ?>
+						</tbody>
+					</table>
+
+					<a href="#" class="sr-only">Fim da tabela.</a>
+				</div>
+			</li>
+		</ul>
 	</main>
 <?php 
 endif;

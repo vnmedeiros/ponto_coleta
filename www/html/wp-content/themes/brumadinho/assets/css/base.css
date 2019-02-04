@@ -20,8 +20,8 @@ button { border: 0; }
 	outline-style: none;
 }
 a {
-	text-decoration: none; 
 	cursor: pointer;
+	color: #1C335F;
 }
 legend { display: none; }
 ol, ul { list-style: none; }
@@ -73,8 +73,11 @@ main {
 * HEADER
 */
 
-header { padding: 50px 15px; }
-h1 { margin-bottom: 40px; }
+header {
+	padding: 50px 15px;
+	display: flex;
+	justify-content: space-between;
+}
 h1 img {
 	width: 100%;
 	max-width: 200px;
@@ -82,6 +85,7 @@ h1 img {
 }
 
 h2 {
+	margin-bottom: 50px;
 	font-size: 32px;
 	color: #1C335F;
 }
@@ -92,12 +96,17 @@ h2 {
 
 main { padding-bottom: 100px; }
 
+main p {
+	text-align: justify;
+	line-height: 1.3rem;
+}
+
 /* FORMULÁRIO DE SELEÇÃO DE ESTADOS */
 
 .form-estado {
 	width: 100%;
 	max-width: 500px;
-	margin-bottom: 20px;
+	margin: 50px 0 20px;
 }
 .form-row {
 	width: 100%;
@@ -157,6 +166,12 @@ main { padding-bottom: 100px; }
 	background-color: #fafafa;
 }
 .postos-lista li + li { margin-top: 20px; }
+
+.postos-lista--type-b li {
+	border: none;
+	background: none;
+}
+
 .postos-lista li button {
 	width: 100%;
 	padding: 7px 10px 3px;
@@ -181,21 +196,31 @@ main { padding-bottom: 100px; }
 	padding: 0 20px;
 	display: none;
 }
+.box-collapse.active { display: block; }
 
-.postos-lista table {
+.postos-lista--type-b li button {
+	padding: 0;
+	cursor: text;
+	border: none;
+}
+.postos-lista--type-b li .box-collapse { padding: 0; }
+
+table {
 	width: 100%;
 	margin-top: 30px;
 	border-top: 1px solid #000;
 	border-left: 1px solid #000;
 }
-.postos-lista table td { background-color: #fff; }
-.postos-lista table thead {
+table td { background-color: #fff; }
+table thead {
 	font-weight: 700;
 	color: #1C335F;
 }
-.postos-lista table thead td { background-color: #e8ebed; }
-.postos-lista table tr:nth-child(even) td { background-color: #f5f5f5; }
-.postos-lista table td {
+table thead td,
+table thead th { background-color: #e8ebed; }
+table tr:nth-child(even) td { background-color: #f5f5f5; }
+table td,
+table th {
 	padding: 5px 10px;
 	border-right: 1px solid #000;
 	border-bottom: 1px solid #000;
