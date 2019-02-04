@@ -67,7 +67,9 @@ jQuery(document).ready( function () {
 					data: data,
 					columns: [
 							{ data: 'title' },
-							{ data: 'item.saldo' }
+							{ data: 'item.saldo' },
+							{ data: 'cidade' },
+							{ data: 'telefone' }
 					]
 			} );
 			}

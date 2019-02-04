@@ -85,6 +85,8 @@
 			<tr>
 				<th>Ponto</th>
 				<th>Saldo</th>
+				<th>Cidade</th>
+				<th>Telefone</th>
 			</tr>
 		</thead>
 	</table>

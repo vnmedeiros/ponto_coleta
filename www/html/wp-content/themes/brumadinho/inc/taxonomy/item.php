@@ -117,7 +117,11 @@ class taxItem {
 			$loop->the_post();
 			$title = get_the_title();
 			$item = get_post_meta(get_the_ID(), $key_meta, true);
-			$pontos[] = ['title'=>$title, 'item' => $item];
+			$cidade = get_post_meta(get_the_ID(), "ponto-cidade", true);
+			$cidade = isset($cidade)? $cidade : '';
+			$telefone = get_post_meta(get_the_ID(), "ponto-telefone", true);
+			$telefone = isset($telefone)? $telefone : '';
+			$pontos[] = ['title'=>$title, 'item' => $item, 'cidade' => $cidade, 'telefone' => $telefone];
 		}
 		wp_reset_query();
 		wp_send_json($pontos, 200);
