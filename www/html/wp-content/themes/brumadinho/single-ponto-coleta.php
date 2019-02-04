@@ -14,6 +14,11 @@
 			$itens[] = $item;
 		}
 	}
+	$endereco = [	'uf' 			=> get_post_meta($post_id, "ponto-uf", true),
+								'cidade'	=> get_post_meta($post_id, "ponto-cidade", true),
+								'endereco'=> get_post_meta($post_id, "ponto-endereco", true),
+								'telefone'=> get_post_meta($post_id, "ponto-telefone", true),
+								'email'		=> get_post_meta($post_id, "ponto-email", true)];
 ?>
 
 	<header>
@@ -27,11 +32,11 @@
 	<main role="main">
 		<ul class="postos-lista postos-lista--type-b">
 			<li>
-				<button class="collapse-button" type="button"><strong>Ponto A</strong></button>
+				<button class="collapse-button" type="button"><strong><?php the_title(); ?></strong></button>
 				<div class="box-collapse active">
-					<span>Endereço completo, número 11 - Cidade</span>
-					<span>1111-1111</span>
-					<span>email@email.com</span>
+					<span> <?php echo isset($endereco['endereco'])? $endereco['endereco'] : ''; ?> </span>
+					<span> <?php echo isset($endereco['telefone'])? $endereco['telefone'] : ''; ?> </span>
+					<span> <?php echo isset($endereco['ponto-email'])? $endereco['ponto-email'] : ''; ?> </span>
 					<a href="#" class="sr-only">Início da tabela.</a>
 
 					<table width="100%" cellspacing="0">
