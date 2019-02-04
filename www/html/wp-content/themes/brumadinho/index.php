@@ -4,11 +4,16 @@
 
 <header>
 	<h1><a href="<?php echo home_url(); ?>"><img src="<?php echo get_template_directory_uri() . '/assets/img/lgo/ibict.png' ?>" alt="Ibict - Instituto Brasileiro de Informação em Ciência e Tecnologia"></a></h1>
-
-	<h2>Pontos de coleta de doações para Brumadinho</h2>
 </header>
 
 <main>
+	<h2>Pontos de coleta de doações para Brumadinho</h2>
+	
+	<p>Por meio do presente sistema em desenvolvimento, será possível que o gestor do ponto de coleta, que deverá ser gerenciado por cada agência de serviço dos Correios, 
+	cadastre os itens necessários de doação, definindo o nível de necessidade (baixa, média ou alta) de cada item, além da quantidade recebida e remetida do item aos pontos 
+	de distribuição ao beneficiário. Ao usuário que pratica a doação é possível obter a informação dos endereços e telefones dos pontos de coleta, e também o nível de necessidade 
+	de cada item por ponto de coleta.</p>
+
 	<form class="form-estado" action="#" method="post">
 		<fieldset>
 			<legend>Formulário de seleção de Estados</legend>
