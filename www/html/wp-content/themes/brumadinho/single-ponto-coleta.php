@@ -24,9 +24,8 @@
 
 		<ul class="postos-lista postos-lista--type-b">
 			<li>
-				<button class="collapse-button" type="button"><strong>Ponto A</strong></button>
+				<button class="collapse-button" type="button"><strong><?php the_title(); ?></strong></button>
 				<div class="box-collapse active">
-					<span> <?php the_title(); ?> </span>
 					<span> <?php echo isset($endereco['endereco'])? $endereco['endereco'] : ''; ?> </span>
 					<span> <?php echo isset($endereco['telefone'])? $endereco['telefone'] : ''; ?> </span>
 					<span> <?php echo isset($endereco['ponto-email'])? $endereco['ponto-email'] : ''; ?> </span>
