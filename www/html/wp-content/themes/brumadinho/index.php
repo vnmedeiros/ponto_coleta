@@ -9,7 +9,7 @@
 <main>
 	<h2>Pontos de coleta de doações para Brumadinho</h2>
 	
-	<p>Por meio do presente sistema em desenvolvimento, será possível que o gestor do ponto de coleta, que deverá ser gerenciado por cada agência de serviço dos Correios, 
+	<p>Por meio do presente sistema em desenvolvimento, será possível que o gestor do ponto de coleta, que deverá ser gerenciado por cada agência de serviço dos <a href="https://www.correios.com.br/a-a-z/busca-agencias">Correios</a>, 
 	cadastre os itens necessários de doação, definindo o nível de necessidade (baixa, média ou alta) de cada item, além da quantidade recebida e remetida do item aos pontos 
 	de distribuição ao beneficiário. Ao usuário que pratica a doação é possível obter a informação dos endereços e telefones dos pontos de coleta, e também o nível de necessidade 
 	de cada item por ponto de coleta.</p>
