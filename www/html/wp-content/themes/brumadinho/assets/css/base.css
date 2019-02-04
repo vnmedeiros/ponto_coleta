@@ -51,6 +51,17 @@ form legend {
 	clip: rect(0,0,0,0);
 }
 
+.sr-only {
+	width: 1px;
+	height: 1px;
+	margin: -1px;
+	padding: 0;
+	overflow: hidden;
+	clip: rect(0,0,0,0);
+	position: absolute;
+	border: 0;
+}
+
 header,
 main {
 	max-width: 1000px;
@@ -88,6 +99,12 @@ main { padding-bottom: 100px; }
 	max-width: 500px;
 	margin-bottom: 20px;
 }
+.form-row {
+	width: 100%;
+	display: flex;
+	justify-content: space-between;
+	position: relative;
+}
 .form-estado label {
 	margin-bottom: 10px;
 	display: block;
@@ -101,6 +118,20 @@ main { padding-bottom: 100px; }
 	border-radius: 5px;
 	border: 1px solid #000;
 	background-color: #fff;
+}
+.form-estado button[type=submit] {
+	width: 34px;
+	height: 34px;
+	margin-left: 10px;
+	cursor: pointer;
+	position: relative;
+	border-radius: 5px;
+	background-color: #1C335F;
+}
+.form-estado button[type=submit] img {
+	width: 100%;
+	height: 100%;
+	display: block;
 }
 
 .box-estado { width: 100%; }
