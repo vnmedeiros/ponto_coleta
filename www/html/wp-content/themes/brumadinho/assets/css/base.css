@@ -79,10 +79,19 @@ header {
 	justify-content: space-between;
 	align-items: center;
 }
-h1 img {
+h1,
+.logo { padding: 0 10px; }
+h1 img,
+.logo img {
 	width: 100%;
 	max-width: 200px;
 	display: block;
+}
+
+@media screen and (max-width: 550px) {
+	header { display: block; }
+	h1 img,
+	.logo img { margin: 0 auto 20px; }
 }
 
 h2 {
