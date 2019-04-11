@@ -11,7 +11,7 @@
 </header>
 
 <main>
-	<h2>Pontos de coleta de doações para Brumadinho</h2>
+	<h2>Sistema de Doações de Suprimentos</h2>
 	
 	<p>Por meio do presente sistema, será possível que o gestor do ponto de coleta, que deverá ser gerenciado por cada agência de serviço dos <a href="https://www.correios.com.br/a-a-z/busca-agencias" target="_blank">Correios</a>, 
 	cadastre os itens necessários de doação, definindo o nível de necessidade (baixa, média ou alta) de cada item, além da quantidade recebida e remetida do item aos pontos 
